@@ -57,12 +57,21 @@ see example in [pyawsstarter](https://github.com/mjm461/pyawsstarter). Only crea
 as the handler will be created next as ```handler.py```
 
 Create a handler.py (to be used by the AWS Lambda) if necessary
-```
+```python
 # newstep/handler.py
 from newstep import NewStep
 
 lambda_handler = NewStep().get_handler()
 ```
+
+Create a Makefile to build this new step
+```bash
+# newstep/Makefile
+
+BUNDLE := newstep
+include ../Makefile.include
+```
+
 ## Development in an IDE
 In this case I am using Pycharm, but to work on a step, make sure ```pip install pyawsstarter```
 the common AWS Lambada package and newstep/src are selected as source.  To do this, right click
