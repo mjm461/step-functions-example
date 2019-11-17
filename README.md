@@ -21,7 +21,7 @@ pyton setup test
 ```
 
 ## Common AWS Lambda functions
-[Common AWS Lambda](https://github.com/mjm461/awslambda) - Includes the base 
+[Common AWS Lambda](https://github.com/mjm461/pyawsstarter) - Includes the base 
 classes for for creating a new lambda.
 
 ## Creating a New Step (Lambda)
@@ -41,8 +41,8 @@ name = newstep
 version = 1.0.0
 
 [options]
-install_requires = awslambda
-dependency_links = git+https://github.com/mjm461/awslambda.git@master#egg=awslambda
+install_requires = pyawsstarter
+dependency_links = git+https://github.com/mjm461/pyawsstarter.git@master#egg=pyawsstarter
 ```
 Add minimum coverage failure to .coveragerc (ex: 80%)
 ```
@@ -53,7 +53,7 @@ fail_under = 80
 ```
 
 Create a new Handler class in ```newstep/newstep.py```, 
-see example in [awslambda](https://github.com/mjm461/awslambda). Only create the class
+see example in [pyawsstarter](https://github.com/mjm461/pyawsstarter). Only create the class
 as the handler will be created next as ```handler.py```
 
 Create a handler.py (to be used by the AWS Lambda) if necessary
@@ -64,7 +64,7 @@ from newstep import NewStep
 lambda_handler = NewStep().get_handler()
 ```
 ## Development in an IDE
-In this case I am using Pycharm, but to work on a step, make sure ```pip install awslambda```
+In this case I am using Pycharm, but to work on a step, make sure ```pip install pyawsstarter```
 the common AWS Lambada package and newstep/src are selected as source.  To do this, right click
 on one of these directories and select "Mark Direcotory As" -> "Sources Root"
 
