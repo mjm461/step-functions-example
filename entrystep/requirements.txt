@@ -1,1 +1,1 @@
-git+https://github.com/mjm461/awslambda@master
+git+https://github.com/mjm461/pyawsstarter@master

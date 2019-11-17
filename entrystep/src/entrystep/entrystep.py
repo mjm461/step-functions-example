@@ -1,4 +1,4 @@
-from awslambda import LambdaBaseEnv
+from pyawsstarter import LambdaBaseEnv
 
 
 class EntryStep(LambdaBaseEnv):
