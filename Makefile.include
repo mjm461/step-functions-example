@@ -1,0 +1,78 @@
+SHELL := /bin/bash
+export PYTHONUNBUFFERED := 1
+BASE := $(shell /bin/pwd)
+VENV_DIR := $(BASE)/.venv
+
+PY_VERSION ?= 3.7
+PYTHON := $(shell /usr/bin/which python$(PY_VERSION))
+ifeq ($(PY_VERSION), 2.7)
+	VIRTUALENV := virtualenv -p $(PYTHON)
+else
+	VIRTUALENV := $(PYTHON) -m venv
+endif
+
+VERSION ?= SNAPSHOT
+BUNDLE ?= bundle
+ZIP_FILE := $(BASE)/target/${BUNDLE}-${VERSION}.zip
+EXCLUDES := -x ./pkg_resources/\* ./__pycache__/\* ./setuptools*/\* ./pip*/\* __pycache__ *.pyc
+
+.DEFAULT_GOAL := all
+.PHONY: build._subdir bundle._subdir test build bundle all
+
+build.init:
+	@echo "  initializing"
+	@$(VIRTUALENV) "$(VENV_DIR)" &>/dev/null
+	@mkdir -p "$(VENV_DIR)/lib64/python$(PY_VERSION)/site-packages"
+	@touch "$(VENV_DIR)/lib64/python$(PY_VERSION)/site-packages/file"
+	@find "$(VENV_DIR)" -name "*.pyc" -exec rm -f {} \;
+
+build.python: build.init
+	@echo "  requirements"
+	@"$(VENV_DIR)/bin/python" setup.py install
+
+build.verbose:
+	@echo "$(BUNDLE) virtualenv: $(VENV_DIR)"
+
+build.subdir.verbose:
+	@echo "  subdirectory"
+
+build.subdir: build.subdir.verbose build._subdir
+
+build: build.verbose build.python build.subdir
+	@echo "  complete"
+
+bundle.init:
+	@echo "  initializing"
+	@mkdir -p target
+
+bundle.requirements: bundle.init
+	@echo "  requirements"
+	@cd "$(VENV_DIR)/lib/python$(PY_VERSION)/site-packages" && zip -r9 "$(ZIP_FILE)" * $(EXCLUDES) &>/dev/null
+	@cd "$(VENV_DIR)/lib64/python$(PY_VERSION)/site-packages" && zip -r9 "$(ZIP_FILE)" * $(EXCLUDES) &>/dev/null
+
+bundle.python: bundle.init
+	@echo "  src"
+	@cd "src" && zip -r9 "$(ZIP_FILE)" *.py $(EXCLUDES) &>/dev/null
+
+bundle.subdir.verbose:
+	@echo "  subdirectory"
+
+bundle.subdir: bundle.subdir.verbose bundle._subdir
+
+bundle.verbose:
+	@echo "$(BUNDLE) artifact: $(ZIP_FILE)"
+
+bundle: bundle.verbose bundle.init bundle.requirements bundle.python bundle.subdir
+	@echo "  complete"
+
+bundle.docker:
+	docker run -v $$PWD:/var/task -it lambci/lambda:build-python3.6 /bin/bash -c 'make build bundle'
+
+all: test build bundle
+
+test:
+	python setup.py test
+
+clean:
+	@echo "cleaning $(BASE)"
+	@rm -rf $(VENV_DIR) target dist build
