@@ -1,7 +1,8 @@
 SHELL := /bin/bash
 export PYTHONUNBUFFERED := 1
 BASE := $(shell /bin/pwd)
-VENV_DIR := $(BASE)/.venv
+VENV_BASE ?= .venv
+VENV_DIR := $(BASE)/${VENV_BASE}
 
 PY_VERSION ?= 3.7
 PYTHON := $(shell /usr/bin/which python$(PY_VERSION))
@@ -19,11 +20,13 @@ EXCLUDES := -x ./pkg_resources/\* ./__pycache__/\* ./setuptools*/\* ./pip*/\* __
 .DEFAULT_GOAL := all
 .PHONY: build._subdir bundle._subdir test build bundle all
 
-build.init:
+
+build.init.dir:
+	@ln -sf ../.eggs
+
+build.init: build.init.dir
 	@echo "  initializing"
 	@$(VIRTUALENV) "$(VENV_DIR)" &>/dev/null
-	@mkdir -p "$(VENV_DIR)/lib64/python$(PY_VERSION)/site-packages"
-	@touch "$(VENV_DIR)/lib64/python$(PY_VERSION)/site-packages/file"
 	@find "$(VENV_DIR)" -name "*.pyc" -exec rm -f {} \;
 
 build.python: build.init
@@ -65,14 +68,14 @@ bundle.verbose:
 bundle: bundle.verbose bundle.init bundle.requirements bundle.python bundle.subdir
 	@echo "  complete"
 
-bundle.docker:
-	docker run -v $$PWD:/var/task -it lambci/lambda:build-python3.6 /bin/bash -c 'make build bundle'
+lambci:
+	docker run --rm -v $$PWD/../:/var/task -e VENV_BASE=.venvdocker -it lambci/lambda:build-python3.7 /bin/bash -c 'cd $(notdir $(CURDIR)) && make build bundle'
 
 all: test build bundle
 
-test:
+test: build.init.dir
 	python setup.py test
 
 clean:
 	@echo "cleaning $(BASE)"
-	@rm -rf $(VENV_DIR) target dist build
+	@rm -rf $(VENV_DIR) .venvdocker target dist build

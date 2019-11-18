@@ -1,4 +1,4 @@
-TOPTARGETS := all clean test bundle build
+TOPTARGETS := all clean test bundle build lambci
 
 SUBDIRS := \
 	entrystep
