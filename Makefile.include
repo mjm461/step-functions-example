@@ -13,7 +13,7 @@ else
 endif
 
 VERSION ?= SNAPSHOT
-BUNDLE ?= bundle
+BUNDLE ?= ""
 ZIP_FILE := $(BASE)/target/${BUNDLE}-${VERSION}.zip
 EXCLUDES := -x ./pkg_resources/\* ./__pycache__/\* ./setuptools*/\* ./pip*/\* __pycache__ *.pyc
 
@@ -22,6 +22,7 @@ EXCLUDES := -x ./pkg_resources/\* ./__pycache__/\* ./setuptools*/\* ./pip*/\* __
 
 
 build.init.dir:
+	@mkdir -p ../.eggs
 	@ln -sf ../.eggs
 
 build.init: build.init.dir
@@ -41,8 +42,12 @@ build.subdir.verbose:
 
 build.subdir: build.subdir.verbose build._subdir
 
+ifeq ($(BUNDLE),"")
+build:
+else
 build: build.verbose build.python build.subdir
 	@echo "  complete"
+endif
 
 bundle.init:
 	@echo "  initializing"
@@ -65,8 +70,12 @@ bundle.subdir: bundle.subdir.verbose bundle._subdir
 bundle.verbose:
 	@echo "$(BUNDLE) artifact: $(ZIP_FILE)"
 
+ifeq ($(BUNDLE),"")
+bundle:
+else
 bundle: bundle.verbose bundle.init bundle.requirements bundle.python bundle.subdir
 	@echo "  complete"
+endif
 
 lambci:
 	docker run --rm -v $$PWD/../:/var/task -e VENV_BASE=.venvdocker -it lambci/lambda:build-python3.7 /bin/bash -c 'cd $(notdir $(CURDIR)) && make build bundle'
