@@ -1,6 +1,7 @@
 TOPTARGETS := all clean test bundle build lambci
 
 SUBDIRS := \
+	examplecommon \
 	entrystep \
 	wordservice
 

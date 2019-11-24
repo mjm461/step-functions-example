@@ -28,6 +28,8 @@ build.init.dir:
 build.init: build.init.dir
 	@echo "  initializing"
 	@$(VIRTUALENV) "$(VENV_DIR)" &>/dev/null
+	@mkdir -p "$(VENV_DIR)/lib64/python$(PY_VERSION)/site-packages"
+	@touch "$(VENV_DIR)/lib64/python$(PY_VERSION)/site-packages/file"
 	@find "$(VENV_DIR)" -name "*.pyc" -exec rm -f {} \;
 
 build.python: build.init

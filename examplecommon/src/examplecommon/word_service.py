@@ -1,0 +1,2 @@
+class WordService(object):
+    pass
