@@ -42,7 +42,7 @@ version = 1.0.0
 
 [options]
 install_requires = pyawsstarter
-dependency_links = git+https://github.com/mjm461/pyawsstarter.git@1.0.0#egg=pyawsstarter
+dependency_links = git+https://github.com/mjm461/pyawsstarter.git@0.0.1#egg=pyawsstarter
 ```
 Add minimum coverage failure to .coveragerc (ex: 80%)
 ```
