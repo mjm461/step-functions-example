@@ -4,15 +4,19 @@ __author__ = "Mark McClain"
 __copyright__ = "Mark McClain"
 __license__ = "mit"
 
+import os
+from unittest import TestCase, mock
 from wordservice import WordService
-from unittest import TestCase
 
 
 class TrieTest(TestCase):
 
+    _resources_dir = os.path.normpath(os.path.join(os.path.dirname(__file__), 'resources'))
+
     @classmethod
     def setUpClass(cls) -> None:
-        cls._word_service = WordService()
+        with mock.patch.object(WordService, '_resources_dir', cls._resources_dir):
+            cls._word_service = WordService()
 
     def test_not_found(self):
         found = self._word_service.search('wordthatdoesnotexist')
@@ -31,9 +35,5 @@ class TrieTest(TestCase):
         assert len(found)
 
     def test_starts_with_maxfound(self):
-        found = self._word_service.starts_with('a', max_found=100)
-        self.assertEqual(100, len(found))
-
-    def test_starts_with_maxfound(self):
-        found = self._word_service.starts_with('a', max_found=100)
-        self.assertEqual(100, len(found))
+        found = self._word_service.starts_with('w', max_found=10)
+        self.assertEqual(10, len(found))

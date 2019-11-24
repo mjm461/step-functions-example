@@ -2,7 +2,7 @@ import os
 from .trie import Trie
 
 
-class WordService:
+class WordService(object):
 
     _resources_dir = os.path.normpath(os.path.join(os.path.dirname(__file__), 'resources'))
 
