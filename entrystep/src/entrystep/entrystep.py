@@ -1,6 +1,7 @@
 import string
 from pyawsstarter import LambdaBaseEnv
 from .random_prefix_service import RandomPrefixService
+from examplecommon import WordService
 
 
 class EntryStep(LambdaBaseEnv):
@@ -11,7 +12,8 @@ class EntryStep(LambdaBaseEnv):
         super().__init__(
             {
                 'MIN_CHARS': int,
-                'MAX_CHARS': int
+                'MAX_CHARS': int,
+                'WORD_SERVICE_BASE': str
             }
         )
 
@@ -20,12 +22,14 @@ class EntryStep(LambdaBaseEnv):
             self.get_parameter('MAX_CHARS')
         )
 
-    def handle(self, event, context) -> dict:
+        self._word_service = WordService(self.get_parameter('WORD_SERVICE_BASE'))
 
+    def handle(self, event, context) -> dict:
+        prefix = self._random_prefix_service.random_prefix()
+        self._logger.info('Searching for word prefix', prefix=prefix)
         event.update(
             {
-                'prefix': self._random_prefix_service.random_prefix()
+                'words': self._word_service.starts_with(prefix)
             }
         )
-
         return event

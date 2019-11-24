@@ -1,7 +1,7 @@
 .DEFAULT_GOAL := all
 
 clean:
-	rm -r build
+	rm -fr build dist
 
 bundle:
 

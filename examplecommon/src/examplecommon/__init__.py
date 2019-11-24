@@ -10,4 +10,4 @@ except DistributionNotFound:
 finally:
     del get_distribution, DistributionNotFound
 
-from .word_service import WordService
+from .word_service import WordService, WordServiceException
