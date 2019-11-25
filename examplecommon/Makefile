@@ -1,7 +1,7 @@
 .DEFAULT_GOAL := all
 
 clean:
-	rm -fr build dist
+	rm -fr .tox build dist
 
 bundle:
 
@@ -11,4 +11,4 @@ build:
 all: build test
 
 test:
-	python setup.py test
+	tox

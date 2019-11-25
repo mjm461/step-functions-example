@@ -85,8 +85,8 @@ lambci:
 all: test build bundle
 
 test: build.init.dir
-	python setup.py test
+	tox
 
 clean:
 	@echo "cleaning $(BASE)"
-	@rm -rf $(VENV_DIR) .venvdocker target dist build
+	@rm -rf $(VENV_DIR) .venvdocker .tox target dist build

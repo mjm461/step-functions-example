@@ -26,7 +26,9 @@ class WordServiceProvider(Module):
 
 
 def create_app(config_filename=None):
-    app = Flask(__name__, instance_relative_config=True)
+    import os
+
+    app = Flask(__name__, instance_relative_config=True, instance_path=os.environ.get('INSTANCE_PATH'))
     app.config.from_pyfile(config_filename)
     register_blueprints(app)
 
