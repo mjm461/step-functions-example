@@ -66,4 +66,4 @@ test:
 
 clean:
 	@echo "cleaning $(BASE)"
-	@rm -rf $(VENV_DIR) .venvdocker .tox target dist build
+	@rm -rf $(VENV_DIR) src/*.egg-info/ temp .pytest_cache/ .coverage .venvdocker .tox target dist build

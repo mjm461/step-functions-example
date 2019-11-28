@@ -1,7 +1,7 @@
 .DEFAULT_GOAL := all
 
 clean:
-	rm -fr .tox build dist
+	@rm -rf src/*.egg-info/ temp .pytest_cache/ .tox .coverage
 
 bundle:
 
