@@ -26,51 +26,15 @@ classes for for creating a new lambda.
 
 ## Creating a New Step (Lambda)
 To creat a new step, use [pyscaffold](https://github.com/pyscaffold/pyscaffold/), 
-in the top level of the project, in this case step-functions-temlate.  To create new step:
+in the top level of the project, in this case step-functions-temlate.  To create new step
+with the package `newstep` and the class `NewStep`:
 
 ```bash
-putup newstep
+python utils/create_step.py newstep Newstep
 ```
-
-Add a version and common dependency to setup.cfg (if needed)
-```
-# newstep/setup.cfg
-
-[metadata]
-name = newstep
-version = 1.0.0
-
-[options]
-install_requires = pyawsstarter
-dependency_links = git+https://github.com/mjm461/pyawsstarter.git@tox#egg=pyawsstarter
-```
-Add minimum coverage failure to .coveragerc (ex: 80%)
-```
-# newstep/.coveragerc
-
-[report]
-fail_under = 80
-```
-
-Create a new Handler class in ```newstep/newstep.py```, 
-see example in [pyawsstarter](https://github.com/mjm461/pyawsstarter). Only create the class
-as the handler will be created next as ```handler.py```
-
-Create a handler.py (to be used by the AWS Lambda) if necessary
-```python
-# newstep/handler.py
-from newstep import NewStep
-
-lambda_handler = NewStep().get_handler()
-```
-
-Create a Makefile to build this new step
-```bash
-# newstep/Makefile
-
-BUNDLE := newstep
-include ../Makefile.include
-```
+This creates new directory `newstep` with a template AWS Lambda:
+ * handler:  `newstep/src/handler.py` with class `NewStep`
+ * handler:  `newstep/src/newstep/newstep.py` with class `NewStep`
 
 ## Development in an IDE
 In this case I am using Pycharm, but to work on a step, make sure ```pip install pyawsstarter```

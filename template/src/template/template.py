@@ -2,7 +2,7 @@ import string
 from pyawsstarter import LambdaBaseEnv
 
 
-class Template(LambdaBaseEnv):
+class CLASS_TEMPLATE_REPLACE(LambdaBaseEnv):
     _letters = string.ascii_lowercase
     _number_letters = len(string.ascii_lowercase)
 

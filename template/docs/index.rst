@@ -1,8 +1,8 @@
 =========
-template
+PACKAGE_TEMPLATE_REPLACE
 =========
 
-This is the documentation of **template**.
+This is the documentation of **PACKAGE_TEMPLATE_REPLACE**.
 
 .. note::
 

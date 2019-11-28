@@ -8,8 +8,8 @@ PAPER         =
 BUILDDIR      = ../build/sphinx/
 AUTODOCDIR    = api
 AUTODOCBUILD  = sphinx-apidoc
-PROJECT       = template
-MODULEDIR     = ../src/template
+PROJECT       = PACKAGE_TEMPLATE_REPLACE
+MODULEDIR     = ../src/PACKAGE_TEMPLATE_REPLACE
 
 # User-friendly check for sphinx-build
 ifeq ($(shell which $(SPHINXBUILD) >/dev/null 2>&1; echo $?), 1)

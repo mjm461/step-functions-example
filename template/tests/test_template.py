@@ -7,14 +7,14 @@ __license__ = "mit"
 import os
 
 from unittest import TestCase, mock
-from template import Template
+from PACKAGE_TEMPLATE_REPLACE import CLASS_TEMPLATE_REPLACE
 
 
 class HandlerTest(TestCase):
 
     @mock.patch.dict(os.environ, {'PARAM_STR': 'string', 'PARAM_INT': '1'})
     def test_handler(self) -> None:
-        event = Template().handler(
+        event = CLASS_TEMPLATE_REPLACE().handler(
             {},
             None
         )

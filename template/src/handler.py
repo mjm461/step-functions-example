@@ -1,4 +1,4 @@
-from template import Template
+from .PACKAGE_TEMPLATE_REPLACE import CLASS_TEMPLATE_REPLACE
 
 
-lambda_handler = Template().get_handler()
+lambda_handler = CLASS_TEMPLATE_REPLACE().get_handler()

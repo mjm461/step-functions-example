@@ -35,7 +35,7 @@ except ImportError:
     from sphinx import apidoc
 
 output_dir = os.path.join(__location__, "api")
-module_dir = os.path.join(__location__, "../src/template")
+module_dir = os.path.join(__location__, "../src/PACKAGE_TEMPLATE_REPLACE")
 try:
     shutil.rmtree(output_dir)
 except FileNotFoundError:
@@ -81,7 +81,7 @@ source_suffix = '.rst'
 master_doc = 'index'
 
 # General information about the project.
-project = u'template'
+project = u'PACKAGE_TEMPLATE_REPLACE'
 copyright = u'2019, Mark McClain'
 
 # The version info for the project you're documenting, acts as replacement for
@@ -151,7 +151,7 @@ html_theme_options = {
 # The name for this set of Sphinx documents.  If None, it defaults to
 # "<project> v<release> documentation".
 try:
-    from template import __version__ as version
+    from PACKAGE_TEMPLATE_REPLACE import __version__ as version
 except ImportError:
     pass
 else:
@@ -216,7 +216,7 @@ html_static_path = ['_static']
 # html_file_suffix = None
 
 # Output file base name for HTML help builder.
-htmlhelp_basename = 'template-doc'
+htmlhelp_basename = 'PACKAGE_TEMPLATE_REPLACE-doc'
 
 
 # -- Options for LaTeX output --------------------------------------------------
@@ -235,7 +235,7 @@ latex_elements = {
 # Grouping the document tree into LaTeX files. List of tuples
 # (source start file, target name, title, author, documentclass [howto/manual]).
 latex_documents = [
-  ('index', 'user_guide.tex', u'template Documentation',
+  ('index', 'user_guide.tex', u'PACKAGE_TEMPLATE_REPLACE Documentation',
    u'Mark McClain', 'manual'),
 ]
 

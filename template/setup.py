@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 """
-    Setup file for template.
+    Setup file for PACKAGE_TEMPLATE_REPLACE.
     Use setup.cfg to configure your project.
 
     This file was generated with PyScaffold 3.2.3.

@@ -10,4 +10,4 @@ except DistributionNotFound:
 finally:
     del get_distribution, DistributionNotFound
 
-from .template import Template
+from .PACKAGE_TEMPLATE_REPLACE import CLASS_TEMPLATE_REPLACE

@@ -1,5 +1,5 @@
 =========
-template
+PACKAGE_TEMPLATE_REPLACE
 =========
 
 
