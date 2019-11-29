@@ -24,4 +24,4 @@ class HandlerTest(TestCase):
             {},
             None
         )
-        self.assertEqual(words, event['words'])
+        self.assertEqual(event['startswith'], {'prefix': 'a', 'words': ['a', 'ab', 'abc']})

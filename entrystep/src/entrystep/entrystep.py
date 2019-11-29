@@ -29,7 +29,10 @@ class EntryStep(LambdaBaseEnv):
         self._logger.info('Searching for word prefix', prefix=prefix)
         event.update(
             {
-                'words': self._word_service.starts_with(prefix)
+                'startswith': {
+                    'prefix': prefix,
+                    'words': self._word_service.starts_with(prefix)
+                }
             }
         )
         return event

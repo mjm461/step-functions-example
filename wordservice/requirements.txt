@@ -1,4 +1,4 @@
-git+https://github.com/mjm461/pyawsstarter@master
+git+https://github.com/mjm461/pyawsstarter@tox
 flask==1.1.1
 flask_injector==0.12.0
 flask_redis==0.4.0
