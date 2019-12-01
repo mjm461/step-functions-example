@@ -21,6 +21,15 @@ source venv/bin/actviate
 pip install -r requirements.txt
 ```
 
+**Things to consider during development:**
+1.  Clean the environment when upgrading packages that are installed from github,
+for example (pyawsstarter) because these packages are cached in .venv and .eggs directories.
+Run `make clean` and delete eggs in the .eggs directory before commiting.  From a clean 
+git pull, this should not be an issue.  This also includes changes to the examplecommon directory.
+2.  Each lambda project has its own setup.py, so each project is really just a subproject,
+with its own setup.  This includes things like coverage and dependencies.
+3.  **This is just an example**, so please excpect bugs.
+
 ## Unit Tests
 Every step or package has its own set of unit tests, which most likely
 uses the common package (if it is an AWS Lambda).  To run a unit test 
@@ -28,7 +37,12 @@ in a package, step1 for
 example:
 ```bash
 cd wordstep
-pyton setup test
+make test
+```
+
+To run all the units tests, in the top level directory:
+```bash
+make test
 ```
 
 ## Common AWS Lambda functions
