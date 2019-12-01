@@ -29,7 +29,9 @@ class WordStep(LambdaBaseEnv):
         self._word_service = WordService(self.get_parameter('WORD_SERVICE_BASE'))
 
     def handle(self, event, context) -> dict:
-        prefix = self._random_prefix_service.random_prefix()
+        # uses prefix if give, else create a random one
+        prefix = event.get('prefix') or self._random_prefix_service.random_prefix()
+
         self._logger.info('Searching for word prefix', prefix=prefix)
         words = self._word_service.starts_with(prefix)
 

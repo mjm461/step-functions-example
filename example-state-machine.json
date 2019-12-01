@@ -1,0 +1,46 @@
+{
+  "Comment": "Example State Machine",
+  "StartAt": "WordStep",
+  "TimeoutSeconds": 3600,
+  "States": {
+    "WordStep": {
+      "Type": "Task",
+      "Resource": "arn:aws:lambda:us-west-2:000000000000:function:dev-wordstep",
+      "TimeoutSeconds": 30,
+      "Next": "StoreStep",
+      "Retry": [
+        {
+          "ErrorEquals": ["States.ALL"],
+          "IntervalSeconds": 3,
+          "MaxAttempts": 1,
+          "BackoffRate": 1.5
+        }
+      ],
+      "Catch": [
+        {
+          "ErrorEquals": ["WordsNotFoundException"],
+          "Next": "FinalStep"
+        }
+      ]
+    },
+    "StoreStep": {
+      "Type": "Task",
+      "Resource": "arn:aws:lambda:us-west-2:000000000000:function:dev-storestep",
+      "TimeoutSeconds": 30,
+      "Next": "FinalStep",
+      "Retry": [
+        {
+          "ErrorEquals": ["States.ALL"],
+          "IntervalSeconds": 3,
+          "MaxAttempts": 1,
+          "BackoffRate": 1.5
+        }
+      ]
+    },
+    "FinalStep": {
+      "Type": "Pass",
+      "End": true
+    }
+  }
+}
+

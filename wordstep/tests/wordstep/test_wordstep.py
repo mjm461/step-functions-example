@@ -15,12 +15,25 @@ class HandlerTest(TestCase):
     @mock.patch.dict(os.environ, {'MIN_CHARS': '2', 'MAX_CHARS': '2', 'WORD_SERVICE_BASE': 'http://localhost'})
     @mock.patch('wordstep.wordstep.WordService')
     @mock.patch('wordstep.wordstep.RandomPrefixService')
-    def test_wordstep_success(self, random_prefix_service, word_service) -> None:
+    def test_wordstep_random(self, random_prefix_service, word_service) -> None:
         random_prefix_service.return_value.random_prefix.return_value = 'a'
         word_service.return_value.starts_with.return_value = ['a', 'ab', 'abc']
 
         event = WordStep().handler(
             {},
+            None
+        )
+        self.assertEqual(event['startswith'], {'prefix': 'a', 'words': ['a', 'ab', 'abc']})
+
+    @mock.patch.dict(os.environ, {'MIN_CHARS': '2', 'MAX_CHARS': '2', 'WORD_SERVICE_BASE': 'http://localhost'})
+    @mock.patch('wordstep.wordstep.WordService')
+    def test_wordstep_given(self, word_service) -> None:
+        word_service.return_value.starts_with.return_value = ['a', 'ab', 'abc']
+
+        event = WordStep().handler(
+            {
+                'prefix': 'a'
+            },
             None
         )
         self.assertEqual(event['startswith'], {'prefix': 'a', 'words': ['a', 'ab', 'abc']})
