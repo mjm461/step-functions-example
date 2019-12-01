@@ -1,0 +1,25 @@
+version: "3.1"
+services:
+
+  wordservice:
+    build: ../wordservice
+    ports:
+      - "5000:5000"
+    volumes:
+      - ../wordservice/src:/src
+
+  localstack:
+    image: localstack/localstack:latest
+    ports:
+      - "8080:8080"
+      - "443:443"
+      - "4567-4608:4567-4608"
+
+    environment:
+      - DEBUG=1
+      - SERVICES=stepfunctions,s3,lambda,sqs
+      - LOCALSTACK_HOSTNAME=localhost
+      - DEFAULT_REGION=us-west-2
+      - DOCKER_HOST=unix:///var/run/docker.sock
+    volumes:
+      - "/var/run/docker.sock:/var/run/docker.sock"

@@ -1,1 +1,0 @@
-git+https://github.com/mjm461/pyawsstarter@master

@@ -26,57 +26,38 @@ build.init.dir:
 	@ln -sf ../.eggs
 
 build.init: build.init.dir
-	@echo "  initializing"
-	@$(VIRTUALENV) "$(VENV_DIR)" &>/dev/null
+	$(VIRTUALENV) "$(VENV_DIR)" &>/dev/null
 	@mkdir -p "$(VENV_DIR)/lib64/python$(PY_VERSION)/site-packages"
 	@touch "$(VENV_DIR)/lib64/python$(PY_VERSION)/site-packages/file"
 	@find "$(VENV_DIR)" -name "*.pyc" -exec rm -f {} \;
 
 build.python: build.init
-	@echo "  requirements"
-	@"$(VENV_DIR)/bin/python" setup.py install
+	"$(VENV_DIR)/bin/python" setup.py install
 
-build.verbose:
-	@echo "$(BUNDLE) virtualenv: $(VENV_DIR)"
-
-build.subdir.verbose:
-	@echo "  subdirectory"
-
-build.subdir: build.subdir.verbose build._subdir
+build.subdir: build._subdir
 
 ifeq ($(BUNDLE),"")
 build:
 else
-build: build.verbose build.python build.subdir
-	@echo "  complete"
+build: build.python build.subdir
 endif
 
 bundle.init:
-	@echo "  initializing"
-	@mkdir -p target
+	mkdir -p target
 
 bundle.requirements: bundle.init
-	@echo "  requirements"
 	@cd "$(VENV_DIR)/lib/python$(PY_VERSION)/site-packages" && zip -r9 "$(ZIP_FILE)" * $(EXCLUDES) &>/dev/null
 	@cd "$(VENV_DIR)/lib64/python$(PY_VERSION)/site-packages" && zip -r9 "$(ZIP_FILE)" * $(EXCLUDES) &>/dev/null
 
 bundle.python: bundle.init
-	@echo "  src"
 	@cd "src" && zip -r9 "$(ZIP_FILE)" *.py $(EXCLUDES) &>/dev/null
 
-bundle.subdir.verbose:
-	@echo "  subdirectory"
-
-bundle.subdir: bundle.subdir.verbose bundle._subdir
-
-bundle.verbose:
-	@echo "$(BUNDLE) artifact: $(ZIP_FILE)"
+bundle.subdir: bundle._subdir
 
 ifeq ($(BUNDLE),"")
 bundle:
 else
-bundle: bundle.verbose bundle.init bundle.requirements bundle.python bundle.subdir
-	@echo "  complete"
+bundle: bundle.init bundle.requirements bundle.python bundle.subdir
 endif
 
 lambci:
@@ -89,4 +70,4 @@ test: build.init.dir
 
 clean:
 	@echo "cleaning $(BASE)"
-	@rm -rf $(VENV_DIR) .venvdocker target dist build
+	@rm -rf $(VENV_DIR) src/*.egg-info/ temp .pytest_cache/ .coverage .venvdocker .tox target dist build

@@ -1,0 +1,16 @@
+version: "3.1"
+services:
+
+  overcast-redis:
+    image: redis
+
+  overcast:
+    build: ../overcast
+    ports:
+      - "80:8080"
+    volumes:
+      - ./src:/src
+    environment:
+      - REDIS_URL=redis://overcast-redis:6379
+      - REDIS_TTL=14400
+      - MIN_INCREMENT_SPAN=300
