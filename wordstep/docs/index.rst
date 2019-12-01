@@ -1,8 +1,8 @@
 =========
-entrystep
+wordstep
 =========
 
-This is the documentation of **entrystep**.
+This is the documentation of **wordstep**.
 
 .. note::
 

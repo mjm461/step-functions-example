@@ -16,7 +16,7 @@ uses the common package (if it is an AWS Lambda).  To run a unit test
 in a package, step1 for
 example:
 ```bash
-cd entrystep
+cd wordstep
 pyton setup test
 ```
 

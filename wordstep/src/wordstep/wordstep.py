@@ -4,7 +4,11 @@ from .random_prefix_service import RandomPrefixService
 from examplecommon import WordService
 
 
-class EntryStep(LambdaBaseEnv):
+class WordsNotFoundException(Exception):
+    pass
+
+
+class WordStep(LambdaBaseEnv):
     _letters = string.ascii_lowercase
     _number_letters = len(string.ascii_lowercase)
 
@@ -27,11 +31,16 @@ class EntryStep(LambdaBaseEnv):
     def handle(self, event, context) -> dict:
         prefix = self._random_prefix_service.random_prefix()
         self._logger.info('Searching for word prefix', prefix=prefix)
+        words = self._word_service.starts_with(prefix)
+
+        if not words:
+            raise WordsNotFoundException('No words found for prefix: '.format(prefix))
+
         event.update(
             {
                 'startswith': {
                     'prefix': prefix,
-                    'words': self._word_service.starts_with(prefix)
+                    'words': words
                 }
             }
         )

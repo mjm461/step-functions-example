@@ -1,2 +1,2 @@
-BUNDLE := entrystep
+BUNDLE := wordstep
 include ../Makefile.include

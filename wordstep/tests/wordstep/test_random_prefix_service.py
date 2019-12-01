@@ -5,7 +5,7 @@ __copyright__ = "Mark McClain"
 __license__ = "mit"
 
 from unittest import TestCase, mock
-from entrystep.random_prefix_service import RandomPrefixService
+from wordstep.random_prefix_service import RandomPrefixService
 
 
 class RandomPrefixServiceTest(TestCase):

@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 """
-    Dummy conftest.py for entrystep.
+    Dummy conftest.py for wordstep.
 
     If you don't know what this is for, just leave it empty.
     Read more about conftest.py under:

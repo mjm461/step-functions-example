@@ -1,5 +1,5 @@
 =========
-entrystep
+wordstep
 =========
 
 

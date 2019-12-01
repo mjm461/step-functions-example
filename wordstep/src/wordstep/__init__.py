@@ -10,4 +10,4 @@ except DistributionNotFound:
 finally:
     del get_distribution, DistributionNotFound
 
-from .entrystep import EntryStep
+from .wordstep import WordStep, WordsNotFoundException
