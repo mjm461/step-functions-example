@@ -1,3 +1,3 @@
 git+https://github.com/mjm461/pyawsstarter@0.0.1
-requests==2.22.0
+requests==2.31.0
 
